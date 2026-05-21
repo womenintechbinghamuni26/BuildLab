@@ -26,15 +26,13 @@ const allowedOrigins = [
     // Add your main production Vercel link here too once it generates
 ];
 
+const cors = require('cors');
+
 app.use(cors({
-    origin: function (origin, callback) {
-        // Allow requests with no origin (like mobile apps or curl requests)
-        if (!origin) return callback(null, true);
-        if (allowedOrigins.indexOf(origin) !== -1 || origin.endsWith('.vercel.app')) {
-            return callback(null, true);
-        }
-        return callback(new Error('Not allowed by CORS'));
-    },
+    origin: [
+        'https://buildlab-9e29nn8z4-toniababys-projects.vercel.app',
+        // Add your main production vercel domain here too if you have it
+    ],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']
