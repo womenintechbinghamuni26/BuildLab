@@ -28,15 +28,31 @@ const allowedOrigins = [
 
 const cors = require('cors');
 
+// Replace these with your exact live Vercel links
+const allowedOrigins = [
+    'https://buildlab-9e29nn8z4-toniababys-projects.vercel.app',
+    'https://buildlab.vercel.app' // Add your main production domain here too if you have it
+];
+
 app.use(cors({
-    origin: [
-        'https://buildlab-9e29nn8z4-toniababys-projects.vercel.app',
-        // Add your main production vercel domain here too if you have it
-    ],
+    origin: function (origin, callback) {
+        // Allow requests with no origin (like mobile apps, postman, or curl)
+        if (!origin) return callback(null, true);
+
+        // Check if the origin matches our list or ends with .vercel.app
+        if (allowedOrigins.indexOf(origin) !== -1 || origin.endsWith('.vercel.app')) {
+            return callback(null, true);
+        } else {
+            return callback(new Error('Not allowed by CORS'));
+        }
+    },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
+
+// Crucial: Handle the preflight OPTIONS request explicitly before your routes
+app.options('*', cors());
 
 app.use(express.json({ limit: '5mb' }));
 app.use(express.urlencoded({ limit: '5mb', extended: true }));
