@@ -78,5 +78,3 @@ mongoose.connect(MONGO_URI)
         console.error("CRITICAL DATABASE HANDSHAKE FAILURE:", err.message);
         process.exit(1);
     });
-
-// ❌ DUPLICATE app.listen BLOCK REMOVED FROM HERE TO PREVENT PORT CLASH CRASHES
