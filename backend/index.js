@@ -21,14 +21,10 @@ const MONGO_URI = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/wit-buildl
 
 // Middlewareconst cors = require('cors');
 
-const allowedOrigins = [
-    'https://buildlab-laaef3tkt-toniababys-projects.vercel.app',
-    // Add your main production Vercel link here too once it generates
-];
 
 const cors = require('cors');
 
-// Make sure this is only declared ONCE in the entire file
+// Declared ONLY ONCE in the entire file
 const allowedOrigins = [
     'https://buildlab-9e29nn8z4-toniababys-projects.vercel.app',
     'https://buildlab-laaef3tkt-toniababys-projects.vercel.app',
@@ -50,9 +46,6 @@ app.use(cors({
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
-app.options('*', cors());
-
-// Crucial: Handle the preflight OPTIONS request explicitly before your routes
 app.options('*', cors());
 
 app.use(express.json({ limit: '5mb' }));
